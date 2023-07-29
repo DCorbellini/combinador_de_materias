@@ -30,14 +30,14 @@ def main():
     con = sqlite3.connect(DATABASE)
     cur = con.cursor()
 
-    load_table_ofertas(cur, DEFAULT_DIR+DEFAULT_FILENAME)
+    load_table(cur, DEFAULT_DIR+DEFAULT_FILENAME)
     con.commit()
 
     res = cur.execute(f'SELECT * FROM {TABLE}')
     pprint(res.fetchall())
 
 
-def create_table_ofertas(cur):
+def create_table(cur):
     cur.execute(f'''create table if not exists {TABLE} (
                     codigo int, 
                     comision int,
@@ -47,14 +47,14 @@ def create_table_ofertas(cur):
                 )''')
 
 
-def load_table_ofertas(cur, filepath):
+def load_table(cur, filepath):
     # in case it doesn't exist
-    create_table_ofertas(cur)
+    create_table(cur)
     # in case it did exist
     cur.execute(f'DELETE FROM {TABLE}')
 
-    with open(filepath) as f_oferta:
-        soup = BeautifulSoup(f_oferta, 'html.parser')
+    with open(filepath) as file:
+        soup = BeautifulSoup(file, 'html.parser')
 
     codigo_anterior = 0
     for row in [tr.find_all('td') for tr in soup.table.tbody.find_all('tr')]:
@@ -74,10 +74,9 @@ def load_table_ofertas(cur, filepath):
         except ValueError:
             continue
 
-        # cur.execute(f'''INSERT INTO {TABLE} (codigo, comision, dia, turno) VALUES
-        #     ({codigo}, {comision}, "{codigo_dia[s_comision[0]]}", "{codigo_turno[s_comision[1]]}")
-        #     ''')
-        pprint(row)
+        cur.execute(f'''INSERT INTO {TABLE} (codigo, comision, dia, turno) VALUES
+            ({codigo}, {comision}, "{codigo_dia[s_comision[0]]}", "{codigo_turno[s_comision[1]]}")
+            ''')
 
 
 if __name__ == '__main__':
