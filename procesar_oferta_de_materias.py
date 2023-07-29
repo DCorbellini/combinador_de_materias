@@ -44,6 +44,7 @@ def create_table(cur):
                     dia var(10),
                     turno var(10),
                     PRIMARY KEY (codigo, comision)
+                    FOREIGN KEY(codigo) REFERENCES materias(codigo)
                 )''')
 
 

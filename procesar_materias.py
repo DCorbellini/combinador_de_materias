@@ -22,14 +22,17 @@ def main():
 
 
 def create_table(cur):
+    cur.execute(f'''create table if not exists {TABLE_MATERIAS} (
+                    codigo int PRIMARY KEY, 
+                    nombre var(50),
+                    nota int
+                )''')
     cur.execute(f'''create table if not exists {TABLE_CORRELATIVAS} (
                     codigo int, 
                     correlativa int,
                     PRIMARY KEY (codigo, correlativa)
-                )''')
-    cur.execute(f'''create table if not exists {TABLE_MATERIAS} (
-                    codigo int PRIMARY KEY, 
-                    nombre var(50)
+                    FOREIGN KEY(codigo) REFERENCES materias(codigo)
+                    FOREIGN KEY(correlativa) REFERENCES materias(codigo)
                 )''')
 
 
@@ -48,8 +51,8 @@ def load_table(cur, filepath):
         for row in table.find_all('tr')[1:]:
             codigo = int(row.th.string)
             nombre = row.find_all('td')[0].string.strip()
-            cur.execute(f'''INSERT INTO {TABLE_MATERIAS} (codigo, nombre) VALUES
-                ({codigo}, "{nombre}")
+            cur.execute(f'''INSERT INTO {TABLE_MATERIAS} (codigo, nombre, nota) VALUES
+                ({codigo}, "{nombre}", 0)
                 ''')
 
             # correlativas puede estar vacio
