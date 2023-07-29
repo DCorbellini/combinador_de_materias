@@ -5,7 +5,8 @@ from pprint import pprint
 
 DEFAULT_DIR = './files/'
 DEFAULT_FILENAME = 'oferta.htm'
-DATABASE = 'materias_db'
+DATABASE = 'materias.db'
+TABLE = 'OFERTA'
 
 codigo_turno = {
     '3': 'Mañana',
@@ -24,37 +25,39 @@ codigo_dia = {
 # Codigos de correlativas, se cursa varios dias por semana y no cumplen el formato de codigo de comision
 CODIGOS_A_IGNORAR = [901, 902, 903, 904, 911, 912]
 
+
 def main():
-    con = sqlite3.connect('materias.db')
+    con = sqlite3.connect(DATABASE)
     cur = con.cursor()
 
     load_table_ofertas(cur, DEFAULT_DIR+DEFAULT_FILENAME)
     con.commit()
 
-    res = cur.execute('SELECT * FROM OFERTA')
+    res = cur.execute(f'SELECT * FROM {TABLE}')
     pprint(res.fetchall())
 
 
 def create_table_ofertas(cur):
-    cur.execute('''create table if not exists OFERTA (
+    cur.execute(f'''create table if not exists {TABLE} (
                     codigo int, 
                     comision int,
                     dia var(10),
-                    turno var(10)
+                    turno var(10),
+                    PRIMARY KEY (codigo, comision)
                 )''')
 
 
-def load_table_ofertas(cur, fullpath):
+def load_table_ofertas(cur, filepath):
     # in case it doesn't exist
     create_table_ofertas(cur)
     # in case it did exist
-    cur.execute('DELETE FROM OFERTA')
+    cur.execute(f'DELETE FROM {TABLE}')
 
-    with open(fullpath) as f_oferta:
+    with open(filepath) as f_oferta:
         soup = BeautifulSoup(f_oferta, 'html.parser')
 
     codigo_anterior = 0
-    for row in [_ for _ in [tr.find_all('td') for tr in soup.table.find_all('tr')] if len(_) > 0]:
+    for row in [tr.find_all('td') for tr in soup.table.tbody.find_all('tr')]:
         s_codigo = row[0].string.strip()
         if not len(s_codigo) > 0:
             codigo = codigo_anterior
@@ -71,9 +74,10 @@ def load_table_ofertas(cur, fullpath):
         except ValueError:
             continue
 
-        cur.execute(f'''INSERT INTO OFERTA (codigo, comision, dia, turno) VALUES
-            ({codigo}, {comision}, "{codigo_dia[s_comision[0]]}", "{codigo_turno[s_comision[1]]}")
-            ''')
+        # cur.execute(f'''INSERT INTO {TABLE} (codigo, comision, dia, turno) VALUES
+        #     ({codigo}, {comision}, "{codigo_dia[s_comision[0]]}", "{codigo_turno[s_comision[1]]}")
+        #     ''')
+        pprint(row)
 
 
 if __name__ == '__main__':
