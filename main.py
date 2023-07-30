@@ -17,6 +17,8 @@ TABLE_OFERTA = 'OFERTA'
 TABLE_CORRELATIVAS = 'CORRELATIVAS'
 TABLE_MATERIAS = 'MATERIAS'
 
+OUTPUT = 'output.txt'
+
 dias = [
     'Lunes',
     'Martes',
@@ -44,12 +46,14 @@ def main(file_materias, file_historia, file_oferta):
     con.commit()
 
     ofertas = get_ofertas(cur, '''
-    (
-        Turno="Tarde" OR
-        Turno="Noche" AND NOT EXISTS (SELECT * FROM OFERTA O2 WHERE O2.CODIGO=O.CODIGO AND O2.Turno="Tarde")
-        ) OR
-    Dia="Sabado"
+        Turno="Noche" OR
+        Dia="Sabado"
     ''')
+
+    # limpiar output
+    with open(OUTPUT, 'w') as _:
+        pass
+
     generar_combinaciones(cur, ofertas, [3628, 3630] )
     # print_combinacion(cur, {
     #     'Jueves': (3679, 4900),
@@ -92,6 +96,7 @@ def generar_combinaciones(cur, ofertas, requisitos=None, combinacion=None, i=0, 
 
 
 def print_combinacion(cur, combinacion):
+    nombres = []
     table = {dia: {turno: '' for turno in turnos} for dia in dias}
     for dia in dias:
         if not combinacion[dia]:
@@ -105,18 +110,24 @@ def print_combinacion(cur, combinacion):
         ''')
         nombre, turno = res.fetchone()
         table[dia][turno] = f'{nombre}\n{codigo} - {comision}'
+        nombres.append(nombre)
 
     df = pd.DataFrame(table)
-    print(tabulate(df,
+    with open(OUTPUT, 'a') as file:
+        file.write(', '.join(nombres))
+        file.write('\n')
+        file.writelines(tabulate(df,
                    headers="keys",
                    tablefmt='grid',
                    colalign=['center' for i in range(7)]))
-
-    # print(tabulate(table,
-    #                headers=['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Vienes', 'Sabado'],
-    #                showindex=['M', 'T', 'N'],
+        file.write('\n\n')
+        file.write('='*120)
+        file.write('\n\n')
+    # print(tabulate(df,
+    #                headers="keys",
     #                tablefmt='grid',
     #                colalign=['center' for i in range(7)]))
+
 
 
 def get_ofertas(cur, condiciones=''):
