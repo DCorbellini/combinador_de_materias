@@ -22,8 +22,12 @@ codigo_dia = {
     '6': 'Sabado'
 }
 
-# Codigos de correlativas, se cursa varios dias por semana y no cumplen el formato de codigo de comision
-CODIGOS_A_IGNORAR = [901, 902, 903, 904, 911, 912]
+CODIGOS_A_IGNORAR = [
+    # las materias transversales se cursan mas de un dia por semana
+    901, 902, 903, 904, 911, 912,
+    # las materias electivas no tienen sus correlativas
+    3677, 3678, 3679
+                     ]
 
 
 def main():
