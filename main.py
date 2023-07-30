@@ -43,8 +43,14 @@ def main(file_materias, file_historia, file_oferta):
     procesar_oferta_de_materias.load_table(cur, file_oferta)
     con.commit()
 
-    ofertas = get_ofertas(cur)
-    generar_combinaciones(cur, ofertas, [3628, 3630])
+    ofertas = get_ofertas(cur, '''
+    (
+        Turno="Tarde" OR
+        Turno="Noche" AND NOT EXISTS (SELECT * FROM OFERTA O2 WHERE O2.CODIGO=O.CODIGO AND O2.Turno="Tarde")
+        ) OR
+    Dia="Sabado"
+    ''')
+    generar_combinaciones(cur, ofertas, [3628, 3630] )
     # print_combinacion(cur, {
     #     'Jueves': (3679, 4900),
     #     'Lunes': (3649, 1900),
@@ -70,19 +76,26 @@ def generar_combinaciones(cur, ofertas, requisitos=None, combinacion=None, i=0, 
 
     dia = dias[i]
 
-    for oferta in ofertas[dia]:
-        codigo, _ = oferta
-        if codigo in materias:
-            continue
-        materias[i] = codigo
-        combinacion[dia] = oferta
+    # Dias que no tienen ninguna materia
+    if not ofertas[dia]:
+        combinacion[dia] = None
         generar_combinaciones(cur, ofertas, requisitos, combinacion, i + 1, materias)
-        materias[i] = None
+    else:
+        for oferta in ofertas[dia]:
+            codigo, _ = oferta
+            if codigo in materias:
+                continue
+            materias[i] = codigo
+            combinacion[dia] = oferta
+            generar_combinaciones(cur, ofertas, requisitos, combinacion, i + 1, materias)
+            materias[i] = None
 
 
 def print_combinacion(cur, combinacion):
     table = {dia: {turno: '' for turno in turnos} for dia in dias}
     for dia in dias:
+        if not combinacion[dia]:
+            continue
         codigo, comision = combinacion[dia]
         res = cur.execute(f'''
             SELECT M.Nombre, O.Turno 
@@ -106,7 +119,7 @@ def print_combinacion(cur, combinacion):
     #                colalign=['center' for i in range(7)]))
 
 
-def get_ofertas(cur):
+def get_ofertas(cur, condiciones=''):
     crear_vista_disponibles(cur)
 
     ofertas = {}
@@ -116,6 +129,7 @@ def get_ofertas(cur):
               FROM {TABLE_OFERTA} O
              WHERE O.Codigo in (SELECT D.Codigo FROM DISPONIBLES D)
                AND O.Dia = "{dia}"
+               {'AND (' + condiciones + ')' if condiciones else ''}
         ''').fetchall()
 
     # res = cur.execute('SELECT Codigo FROM DISPONIBLES')
