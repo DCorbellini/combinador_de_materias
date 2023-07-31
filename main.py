@@ -19,12 +19,12 @@ REQUISITOS = []
 EXTRA_QUERY = ''
 # Ejemplo
 # EXTRA_QUERY = '''
-#     ( Turno="Noche"
-#     OR (Turno='Tarde' AND NOT Codigo=3628)
-#     OR Dia="Sabado" )
-# AND NOT Codigo=3639
-# AND NOT Codigo=3644
-# '''
+#         ( Turno="Noche"
+#         OR (Turno='Tarde' AND NOT Codigo=3628)
+#         OR Dia="Sabado" )
+#     AND NOT Codigo=3639
+#     AND NOT Codigo=3644
+#     '''
 #   materias a la noche
 # o a la tarde (excepto fisica)
 # o los sabados
@@ -37,12 +37,13 @@ import sqlite3
 from datetime import datetime
 import pandas as pd
 import hashlib
+from openpyxl import load_workbook
+from openpyxl.styles import Alignment
 
 import procesar_materias
 import procesar_historia_academica
 import procesar_oferta_de_materias
 
-DEBUG = False
 
 DEFAULT_DIR = './files/'
 FILE_MATERIAS = 'materias.htm'
@@ -55,6 +56,7 @@ TABLE_CORRELATIVAS = 'CORRELATIVAS'
 TABLE_MATERIAS = 'MATERIAS'
 
 OUTPUT = f'output_{datetime.now().strftime("%Y%m%d_%H%M%S")}.xlsx'
+WORKSHEET = 'Combinaciones'
 writer = None
 
 dias = [
@@ -86,21 +88,13 @@ def main(file_materias, file_historia, file_oferta):
 
     ofertas = get_ofertas(cur, EXTRA_QUERY)
 
-    writer = pd.ExcelWriter(OUTPUT, engine='xlsxwriter')
-
-    if DEBUG:
-        print_combinacion(cur, {
-            'Jueves': (3649, 1900),
-            'Lunes': (3649, 1900),
-            'Martes': (3649, 1900),
-            'Miercoles': (3649, 1900),
-            'Sabado': (3649, 1900),
-            'Viernes': (3649, 1900)
-        })
-    else:
-        generar_combinaciones(cur, ofertas, REQUISITOS)
-
+    writer = pd.ExcelWriter(OUTPUT)
+    generar_combinaciones(cur, ofertas, REQUISITOS)
+    # Setear ancho de columnas
+    writer.sheets[WORKSHEET].set_column('C:H', 40)
     writer.close()
+
+    set_aligment()
 
 
 def generar_combinaciones(cur, ofertas, requisitos=None, combinacion=None, i=0, materias=None):
@@ -140,7 +134,6 @@ startrow = 1
 def print_combinacion(cur, combinacion):
     global startrow
     global writer
-    nombres = []
     table = {dia: {turno: '' for turno in turnos} for dia in dias}
     for dia in dias:
         if not combinacion[dia]:
@@ -154,32 +147,15 @@ def print_combinacion(cur, combinacion):
         ''')
         nombre, turno = res.fetchone()
         table[dia][turno] = f'{nombre}\n({codigo} - {comision})'
-        nombres.append(nombre)
 
     df = pd.DataFrame(table)
 
-    # if DEBUG:
-    #     print(tabulate(df,
-    #                    headers="keys",
-    #                    tablefmt='grid',
-    #                    colalign=['center' for i in range(7)]))
-    # else:
-
-    st = df.style.applymap(generar_style)
-    st.to_excel(writer, 'Combinaciones', startrow=startrow, startcol=1)
-
-    # formato para columnas
-    wrap_format = writer.book.add_format({'text_wrap': True})
-    for column in df:
-        # ajustar tamaño de columna
-        column_length = max(df[column].astype(str).map(len).max(), len(column))
-        col_idx = df.columns.get_loc(column) + 2  # una columna en blanco, una columna para el turno
-        writer.sheets['Combinaciones'].set_column(col_idx, col_idx, column_length, wrap_format)
-
+    st = df.style.applymap(generate_style)
+    st.to_excel(writer, WORKSHEET, startrow=startrow, startcol=1)
     startrow += 5
 
 
-def generar_style(string):
+def generate_style(string):
     if string:
         # solo quiero hashear la parte del nombre
         # random.seed(hash(string.split('\n')[0]))
@@ -196,9 +172,7 @@ def generar_style(string):
     else:
         color_hex = '#FFFFFF'
 
-    return (f'background-color: {color_hex}; '
-            f'text-align: center; '
-            f'vertical-align: middle; ')
+    return f'background-color: {color_hex};'
 
 
 def get_ofertas(cur, condiciones=''):
@@ -240,6 +214,18 @@ def crear_vista_disponibles(cur):
         SELECT A.Codigo
         FROM APROBADAS A
     ''')
+
+
+# Por algun motivo el Styler y el book.add_style no se llevan bien
+# Uso openpyxl para asignar wrap text=True en el libro
+def set_aligment():
+    wb = load_workbook(OUTPUT)
+    ws = wb[WORKSHEET]
+    # ws['A:H'].alignment = Alignment(wrap_text=True)
+    for row in ws['A:H']:
+        for cell in row:
+            cell.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+    wb.save(OUTPUT)
 
 
 if __name__ == '__main__':
