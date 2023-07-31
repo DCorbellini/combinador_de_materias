@@ -11,10 +11,12 @@ Este projecto busca facilitar la toma de decisiones a la hora de anotarse a mate
    - Este paso solo es necesario si se quiere cambiar el plan de estudios
    - El plan de estudios debe tener materias que se cursen una vez por semana y debe seguir la misma estructura que el plan de estudios de Ingenieria Informatica
 1. Ejecutar [main.py](./main.py)
+
 El programa va a generar un archivo excel como el que se mostro en la imagen con todas las combinaciones posibles (limitandose a una materia por dia)
 
 ### Opciones Extra
 Dentro de [main.py](./main.py) hay 2 variables que ayudan a filtrar combinaciones
 - REQUISITOS: lista de enteros donde se introducen los codigos de las materias que deben entrar si o si en la combiancion
 - EXTRA_QUERY: Query de SQLite que se usa para filtrar la oferta de materias, con una tabla que incluye el codigo de materia, el codigo de comision, el dia, y el turno en que se cursan
+
 Para mas informacion ver el archivo [main.py](./main.py)
