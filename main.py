@@ -1,3 +1,43 @@
+# Lista de enteros con codigos de materias que deben estar en la combinacion
+# Puede estar vacia
+REQUISITOS = [3628, 3641]
+# Ejemplo
+# REQUISITOS = [3628, 3641]
+# Todas las combinaciones van a incluir Fisica 1 y Bases de Datos Aplicadas
+
+# Query de SQLite3 para buscar materias disponibles
+# La tabla tiene las columnas
+# - Codgio: int
+# - Comision: int
+# - Turno: ["Mañana", "Tarde", "Noche"]
+# - Dia: ["Lunes",
+#         'Martes',
+#         'Miercoles',
+#         'Jueves',
+#         'Viernes',
+#         'Sabado' ]
+EXTRA_QUERY = '''
+    ( Turno="Noche" 
+    OR (Turno='Tarde' AND NOT Codigo=3628) 
+    OR Dia="Sabado" )
+AND NOT Codigo=3639
+AND NOT Codigo=3644
+'''
+# Ejemplo
+# EXTRA_QUERY = '''
+#     ( Turno="Noche"
+#     OR (Turno='Tarde' AND NOT Codigo=3628)
+#     OR Dia="Sabado" )
+# AND NOT Codigo=3639
+# AND NOT Codigo=3644
+# '''
+#   materias a la noche
+# o a la tarde (excepto fisica)
+# o los sabados
+# excepto analisis matematico
+#       y gestion de las organizaciones
+
+
 import random
 import sqlite3
 from datetime import datetime
@@ -50,16 +90,7 @@ def main(file_materias, file_historia, file_oferta):
     procesar_oferta_de_materias.load_table(cur, file_oferta)
     con.commit()
 
-    #   materias a la noche
-    # o a la tarde (excepto fisica)
-    # o los sabados
-    # excepto analisis matematico
-    #       y gestion de las organizaciones (porque son muchos)
-    ofertas = get_ofertas(cur, '''
-            (Turno="Noche" OR (Turno='Tarde' AND NOT Codigo=3628) OR Dia="Sabado")
-        AND NOT Codigo=3639
-        AND NOT Codigo=3644
-    ''')
+    ofertas = get_ofertas(cur, EXTRA_QUERY)
 
     writer = pd.ExcelWriter(OUTPUT, engine='xlsxwriter')
 
@@ -73,7 +104,7 @@ def main(file_materias, file_historia, file_oferta):
             'Viernes': (3649, 1900)
         })
     else:
-        generar_combinaciones(cur, ofertas, [ 3630])
+        generar_combinaciones(cur, ofertas, REQUISITOS)
 
     writer.close()
 
@@ -111,6 +142,7 @@ def generar_combinaciones(cur, ofertas, requisitos=None, combinacion=None, i=0, 
 startrow = 1
 
 
+# noinspection PyUnresolvedReferences
 def print_combinacion(cur, combinacion):
     global startrow
     global writer
@@ -150,7 +182,7 @@ def print_combinacion(cur, combinacion):
     for column in df:
         # ajustar tamaño de columna
         column_length = max(df[column].astype(str).map(len).max(), len(column))
-        col_idx = df.columns.get_loc(column)+2  # una columna en blanco, una columna para el turno
+        col_idx = df.columns.get_loc(column) + 2  # una columna en blanco, una columna para el turno
         writer.sheets['Combinaciones'].set_column(col_idx, col_idx, column_length, wrap_format)
 
     startrow += 5
