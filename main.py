@@ -1,11 +1,11 @@
 # Lista de enteros con codigos de materias que deben estar en la combinacion
 # Puede estar vacia
-REQUISITOS = [3628, 3641]
+REQUISITOS = []
 # Ejemplo
 # REQUISITOS = [3628, 3641]
 # Todas las combinaciones van a incluir Fisica 1 y Bases de Datos Aplicadas
 
-# Query de SQLite3 para buscar materias disponibles
+# Query de SQLite para buscar materias disponibles
 # La tabla tiene las columnas
 # - Codgio: int
 # - Comision: int
@@ -16,13 +16,7 @@ REQUISITOS = [3628, 3641]
 #         'Jueves',
 #         'Viernes',
 #         'Sabado' ]
-EXTRA_QUERY = '''
-    ( Turno="Noche" 
-    OR (Turno='Tarde' AND NOT Codigo=3628) 
-    OR Dia="Sabado" )
-AND NOT Codigo=3639
-AND NOT Codigo=3644
-'''
+EXTRA_QUERY = ''
 # Ejemplo
 # EXTRA_QUERY = '''
 #     ( Turno="Noche"
@@ -176,9 +170,6 @@ def print_combinacion(cur, combinacion):
 
     # formato para columnas
     wrap_format = writer.book.add_format({'text_wrap': True})
-    # for i in range(len(dias)):
-    #     # ajustar tamaño de columna
-    #     writer.sheets['Combinaciones'].set_column(i+2, i+2, 10, wrap_format)
     for column in df:
         # ajustar tamaño de columna
         column_length = max(df[column].astype(str).map(len).max(), len(column))
@@ -220,7 +211,7 @@ def get_ofertas(cur, condiciones=''):
               FROM {TABLE_OFERTA} O
              WHERE O.Codigo in (SELECT D.Codigo FROM DISPONIBLES D)
                AND O.Dia = "{dia}"
-               {'AND (' + condiciones + ')' if condiciones else ''}
+             {'AND (' + condiciones + ')' if condiciones else ''}
         ''').fetchall()
 
     # res = cur.execute('SELECT Codigo FROM DISPONIBLES')

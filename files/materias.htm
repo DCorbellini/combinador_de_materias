@@ -1,0 +1,909 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+                    <script type="text/javascript"
+                        src="../../js/jquery-1.4.2.js"></script>
+                                <link rel="stylesheet" type="text/css"
+                      href="../../js/tagcloud/tagcloud.css"/>
+                <script type="text/javascript"
+                        src="../../js/tagcloud/tagcloud.js"></script>
+                                <link rel="stylesheet" type="text/css"
+                      href="../../js/simpletabs/simpletabs.css"/>
+                <script type="text/javascript"
+                        src="../../js/simpletabs/simpletabs.js"></script>
+                                <!--[if IE]>
+                <script type="text/javascript"
+                        src="../../js/pngFix/pngFix.js"></script>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $(document).pngFix();
+                    });
+                </script>
+                <![endif]-->
+                                <link rel="stylesheet" type="text/css"
+                      href="../../js/shadowbox/shadowbox.css"/>
+                <script type="text/javascript"
+                        src="../../js/shadowbox/shadowbox.js"></script>
+                <script type="text/javascript">
+                    Shadowbox.init({
+                        language: 'es',
+                        enableKeys: false,
+                        players: ['html', 'img']
+                    });
+                </script>
+                    <script type="text/javascript">
+        function utf8_decode(strData) { // eslint-disable-line camelcase
+            //  discuss at: http://locutus.io/php/utf8_decode/
+            // original by: Webtoolkit.info (http://www.webtoolkit.info/)
+            //    input by: Aman Gupta
+            //    input by: Brett Zamir (http://brett-zamir.me)
+            // improved by: Kevin van Zonneveld (http://kvz.io)
+            // improved by: Norman "zEh" Fuchs
+            // bugfixed by: hitwork
+            // bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
+            // bugfixed by: Kevin van Zonneveld (http://kvz.io)
+            // bugfixed by: kirilloid
+            // bugfixed by: w35l3y (http://www.wesley.eti.br)
+            //   example 1: utf8_decode('Kevin van Zonneveld')
+            //   returns 1: 'Kevin van Zonneveld'
+
+            var tmpArr = [];
+            var i = 0, c1 = 0, seqlen = 0;
+
+            strData += '';
+
+            while (i < strData.length) {
+                c1 = strData.charCodeAt(i) & 0xFF;
+                seqlen = 0;
+
+                // http://en.wikipedia.org/wiki/UTF-8#Codepage_layout
+                if (c1 <= 0xBF) {
+                    c1 = (c1 & 0x7F);
+                    seqlen = 1
+                } else if (c1 <= 0xDF) {
+                    c1 = (c1 & 0x1F);
+                    seqlen = 2
+                } else if (c1 <= 0xEF) {
+                    c1 = (c1 & 0x0F);
+                    seqlen = 3
+                } else {
+                    c1 = (c1 & 0x07);
+                    seqlen = 4
+                }
+
+                for (var ai = 1; ai < seqlen; ++ai) {
+                    c1 = ((c1 << 0x06) | (strData.charCodeAt(ai + i) & 0x3F))
+                }
+
+                if (seqlen === 4) {
+                    c1 -= 0x10000
+                    tmpArr.push(String.fromCharCode(0xD800 | ((c1 >> 10) & 0x3FF)));
+                    tmpArr.push(String.fromCharCode(0xDC00 | (c1 & 0x3FF)))
+                } else {
+                    tmpArr.push(String.fromCharCode(c1))
+                }
+
+                i += seqlen
+            }
+
+            return tmpArr.join('')
+        }
+    </script>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>Departamento de Ingenier&iacute;a e Investigaciones Tecnol&oacute;gicas  - </title>
+    <link href="imagenes/iconos/unlam_favicon.ico" rel="shortcut icon"/>
+    <link rel="stylesheet" type="text/css" href="../../css/core.css"/>
+    <link rel="stylesheet" type="text/css" href="css/template.css"/>
+
+    <!--<script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-2530887-18']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+      function AlertMessage()
+        {
+        Shadowbox.open({
+            player:     'iframe',
+            content:    'publicidad.html',
+            title:	    'Importante',
+            height:     480,
+            width:      640
+            });
+        }
+
+        (function(){var i7e_e=document.createElement("script");var i7e_t=window.location.host; i7e_e.type="text/javascript"; return i7e_r="es-ES",i7e_t=i7e_t.replace(/\./g,"--"),i7e_t+=".accesible.inclusite.com",i7e_e.src=("https:"==document.location.protocol?"https://":"http://")+i7e_t+"/inclusite/frameworks_initializer.js?lng="+i7e_r,document.getElementsByTagName("head")[0].appendChild(i7e_e),i7e_e.src})()
+    </script>-->
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-71981724-9', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+</head>
+<body>
+<!--------------------------------------------------------------------------- WRAPPER {dibujo la pagina} -->
+<div id="wrapper">
+
+    <!--------------------------------------------------------------------------- HEADER {logo, links, buscador, menu secciones} -->
+    <div id="header">
+
+        <h1 id="logo">
+            <a href="/index.php" title="Universidad Nacional de La Matanza"><span>UNLaM</span></a>
+        </h1>
+
+        <div id="outerlinks">
+            <a href="https://login.microsoftonline.com/">Servicio de Webmail</a>
+        </div>
+
+        <div id="searcher">
+            <form action="/index.php?seccion=-1&accion=buscador" method="post" class="search">
+                <input type="text" class="text" id="searchingString" name="searchingString" value="buscar"
+                       onblur="if(this.value=='')value=this.defaultValue;"
+                       onfocus="if(this.value==this.defaultValue)value='';"/>
+                <input type="submit" class="button" value=""
+                       onclick="if(getElementById('searchingString').value==getElementById('searchingString').defaultValue) {getElementById('searchingString').value='';} return isEmptySearchingString(searchingString,'searchingString');"/>
+            </form>
+            <script language='javascript' type="text/javascript">
+                function isEmptySearchingString(theElement) {
+                    var s = theElement.value;
+                    if (s.length != 0) {
+                        return true;
+                    }
+                    theElement.focus();
+                    return false;
+                }
+            </script>
+        </div>
+
+        <div id="topNav">
+            <ul id="dropdown">
+    <li class='inicio'><a  href='/index.php?seccion=1'>inicio</a> </li><li class='Institucional'><a  href='/index.php?seccion=2'>Institucional</a> </li><li class='acad&eacute;micas'><a  class='selected'  href='/index.php?seccion=3'>acad&eacute;micas</a> </li><li class='Investigaciones'><a  href='/index.php?seccion=4'>Investigaciones</a> </li><li class='CeDIT'><a  href='/index.php?seccion=5'>CeDIT</a> </li></ul>        </div>
+
+    </div>
+
+    <!--------------------------------------------------------------------------- CONTENT (historial, menu principal, contenidos)-->
+    <div id="content" class="acad&eacute;micas">
+          <div class="tripleColumn">
+    <div id='photowide'><img src='imagenes/fotos/seccion/top_ingenieria.jpg' /></div>  </div>
+
+  <div class="doubleColumn">
+        <div id="mainTitle">
+        <h2>Plan de estudio 2023 - Ingeniería Informática</h2>    </div>
+            <div id="mainContent">
+        <table class="full">
+  <thead>
+    <tr>
+      <th colspan="5">Primer Año</th>
+    </tr>
+  </thead>
+</table>
+
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5"> Primer Cuatrimestre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">3621</th>
+      <td>Matemática Discreta</td>
+      <td>---</td>
+      <td>4</td>
+      </tr>
+    <tr>
+      <th class="sub">3622</th><td>Análisis Matemático I</td>
+      <td>---</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3623</th>
+      <td>Programación Inicial</td>
+      <td>---</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3624</th>
+      <td>Introducción a los Sistemas de Información</td>
+      <td>---</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3625</th>
+      <td>Sistemas de Numeración</td>
+      <td>---</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3626</th>
+      <td>Principios de Calidad de Software</td>
+      <td>---</td>
+      <td>4</td>
+    </tr>
+
+</tbody></table>
+
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5"> Segundo Cuatrimestre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">3627</th>
+      <td>Álgebra y Geometría Analítica I</td>
+      <td>---</td>
+      <td>4</td>
+      </tr>
+    <tr>
+      <th class="sub">3628</th>
+      <td>Física I</td>
+      <td>3622</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3629</th>
+      <td>Programación Estructurada Básica</td>
+      <td>3623</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3630</th>
+      <td>Introducción a la Gestión de Requisitos</td>
+      <td>3624</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3631</th>
+      <td>Fundamentos de Sistemas Embebidos</td>
+      <td>3625</td>
+      <td>4</td>
+    </tr>
+
+    <tr>
+      <th class="sub">3632</th>
+      <td>Introducción a Proyectos Informáticos</td>
+      <td>---</td>
+      <td>4</td>
+    </tr>
+
+</tbody></table>
+
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5">Segundo Año</th>
+    </tr>
+  </thead>
+</table>
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5"> Primer Cuatrimestre </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">3633</th>
+      <td>Análisis Matemático II</td>
+      <td>3622</td>
+      <td>4</td>
+      </tr>
+    <tr>
+      <th class="sub">3634</th>
+      <td>Física II</td>
+      <td>3628</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3635</th>
+      <td>Tópicos de Programación</td>
+      <td>3629 / 3621</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3636</th>
+      <td>Bases de Datos</td>
+      <td>3629 / 3621</td>
+      <td>4</td>
+    </tr>
+<tr>
+      <th class="sub">3637</th>
+      <td>Análisis de Sistemas</td>
+      <td>3630</td>
+      <td>4</td>
+    </tr>
+
+<tr>
+      <th class="sub">3638</th>
+      <td>Arquitectura de Computadoras</td>
+      <td>3631</td>
+      <td>4</td>
+    </tr>
+
+    <tr>
+      <th class="sub">3676</th>
+      <td>Responsabilidad Social Universitaria</td>
+      <td>3626</td>
+      <td>4</td>
+    </tr>
+
+
+</tbody></table><table class="full">
+  <thead>
+    <tr>
+      <th colspan="5"> Segundo Cuatrimestre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">3639</th>
+      <td>Análisis Matemático III</td>
+      <td>3633</td>
+      <td>4</td>
+      </tr>
+    <tr>
+      <th class="sub">3640</th>
+      <td>Algoritmos y Estructuras de Datos</td>
+      <td>3635</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3641</th>
+      <td>Bases de Datos Aplicada</td>
+      <td>3636</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3642</th>
+      <td>Principios de Diseño de Sistemas</td>
+      <td>3637 / 3626</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3643</th>
+      <td>Redes de Computadoras</td>
+      <td>3638 / 3634</td>
+      <td>4</td>
+    </tr>
+
+    <tr>
+      <th class="sub">3644</th>
+      <td>Gestión de las Organizaciones</td>
+      <td>3632</td>
+      <td>4</td>
+    </tr>
+
+    <tr>
+      <th class="sub">3680</th>
+      <td>Taller de Integración*</td>
+      <td>3638 / 3636 / 3635 / 3632 / 3630 / 3626 / 3625 / 3624 / 3623 / 3621</td>
+      <td>4</td>
+    </tr>
+
+</tbody></table>
+
+
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5">Tercer Año</th>
+    </tr>
+  </thead>
+</table>
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5"> Primer Cuatrimestre </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">3645</th>
+      <td>Álgebra y Geometría Analítica II</td>
+      <td>3627</td>
+      <td>4</td>
+      </tr>
+    <tr>
+      <th class="sub">3646</th>
+      <td>Paradigmas de Programación</td>
+      <td>3640 / 3633</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3647</th>
+      <td>Requisitos Avanzados</td>
+      <td>3642</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3648</th>
+      <td>Diseño de Software</td>
+      <td>3642 / 3636</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3649</th>
+      <td>Sistemas Operativos</td>
+      <td>3638</td>
+      <td>4</td>
+    </tr>
+
+    <tr>
+      <th class="sub">3650</th>
+      <td>Seguridad de la Información</td>
+      <td>3643 / 3638 / 3635</td>
+      <td>4</td>
+    </tr>
+
+    <tr>
+      <th class="sub">3675</th>
+      <td>Práctica Profesional Supervisada</td>
+      <td>3642</td>
+      <td>4</td>
+    </tr>
+
+
+</tbody></table><table class="full">
+  <thead>
+    <tr>
+      <th colspan="5"> Segundo Cuatrimestre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">3651</th>
+      <td>Probabilidad y Estadística</td>
+      <td>3645 / 3639 / 3621</td>
+      <td>4</td>
+      </tr>
+    <tr>
+      <th class="sub">3652</th>
+      <td>Programación Avanzada</td>
+      <td>3641 / 3646</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3653</th>
+      <td>Arquitecturas de Sistemas Software</td>
+      <td>3648</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3654</th>
+      <td>Virtualización de Hardware</td>
+      <td>3649 / 3645 / 3640</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3655</th>
+      <td>Auditoría y Legislación</td>
+      <td>3650</td>
+      <td>4</td>
+    </tr>
+
+</tbody></table>
+
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5">Cuarto Año</th>
+    </tr>
+  </thead>
+</table>
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5"> Primer Cuatrimestre </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">3656</th>
+      <td>Estadística Aplicada</td>
+      <td>3651 / 3641</td>
+      <td>4</td>
+      </tr>
+    <tr>
+      <th class="sub">3657</th>
+      <td>Autómatas y Gramática </td>
+      <td>3646</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3658</th>
+      <td>Programación Concurrente</td>
+      <td>3654 / 3646</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3659</th>
+      <td>Gestión Aplicada al Desarrollo de Software I</td>
+      <td>3653 / 3647 / 3644</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3660</th>
+      <td>Sistemas Operativos Avanzados</td>
+      <td>3654</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3661</th>
+      <td>Gestión de Proyectos</td>
+      <td>3651 / 3650 / 3644</td>
+      <td>4</td>
+    </tr>
+
+
+</tbody></table>
+
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5"> Segundo Cuatrimestre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">3662</th>
+      <td>Matemática Aplicada</td>
+      <td>3651</td>
+      <td>6</td>
+      </tr>
+    <tr>
+      <th class="sub">3663</th>
+      <td>Lenguajes y Compiladores</td>
+      <td>3657</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3664</th>
+      <td>Inteligencia Artificial</td>
+      <td>3651 / 3646</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3665</th>
+      <td>Gestión Aplicada al Desarrollo de Software II</td>
+      <td>3659 / 3652</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3666</th>
+      <td>Seguridad Aplicada y Forensia</td>
+      <td>3655 / 3652 / 3649</td>
+      <td>4</td>
+    </tr>
+
+<tr>
+      <th class="sub">3667</th>
+      <td>Gestión de la Calidad en Procesos de Sistemas</td>
+      <td>3647</td>
+      <td>4</td>
+      </tr>
+</tbody></table>
+
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5">Quinto Año</th>
+    </tr>
+  </thead>
+</table>
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5"> Primer Cuatrimestre </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    
+    <tr>
+      <th class="sub">3668</th>
+      <td>Inteligencia Artificial Aplicada</td>
+      <td>3664 / 3656</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3669</th>
+      <td>Innovación y Emprendedorismo</td>
+      <td>3661</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3670</th>
+      <td>Ciencia de Datos</td>
+      <td>3664 / 3656</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3671</th>
+      <td>Proyecto Final de Carrera**</td>
+      <td>3667 / 3661 / 3660 / 3659 / 3656</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">3672</th>
+      <td>Electiva I</td>
+      <td>3658 / 3661 / 3663</td>
+      <td>4</td>
+    </tr>
+
+</tbody></table>
+
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5"> Segundo Cuatrimestre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">3673</th>
+      <td>Electiva II</td>
+      <td>3662 / 3666</td>
+      <td>4</td>
+      </tr>
+    <tr>
+      <th class="sub">3674</th>
+      <td>Electiva III</td>
+      <td>3664 / 3665</td>
+      <td>4</td>
+    </tr>
+  
+
+</tbody></table>
+
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5">Electivas I 2023</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+<th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">3677</th>
+      <td>Lenguaje Orientado a Negocios</td>
+<td></td>
+           <td>4</td>
+      </tr>
+   
+</tbody></table>
+
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5">Electivas II 2023</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">3678</th>
+      <td>Tecnologías en Seguridad</td>
+      <td></td>
+           <td>4</td>
+      </tr>
+   
+</tbody></table>
+
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5">Electivas III 2023</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">3679</th>
+      <td>Visión Artificial</td>
+      <td></td>
+           <td>4</td>
+      </tr>
+   
+</tbody></table>
+
+<table class="full">
+  <thead>
+    <tr>
+      <th colspan="5">Conocimientos comunes requeridos por HCS de la UNLaM</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Código</th>
+      <th>Asignatura</th>
+      <th>Correlatividad</th>
+      <th>Horas semanales</th>
+      </tr>
+    <tr>
+      <th class="sub">901</th>
+      <td> Inglés Transversal Nivel I</td>
+      <td>---</td>
+      <td>4</td>
+      </tr>
+    <tr>
+      <th class="sub">902</th>
+      <td>Inglés Transversal Nivel II</td>
+      <td>901</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">903</th>
+      <td>Inglés Transversal Nivel III</td>
+      <td>902</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th class="sub">904</th>
+      <td> Inglés Transversal Nivel IV</td>
+      <td>903</td>
+      <td>4</td>
+    </tr>
+<tr>
+      <th class="sub">911</th>
+      <td>Computación Transversal Nivel I</td>
+      <td>---</td>
+      <td>4</td>
+    </tr>
+<tr>
+      <th class="sub">912</th>
+      <td>Computación Transversal Nivel II</td>
+      <td>911</td>
+      <td>4</td>
+    </tr>
+
+</tbody>
+ </table>
+
+<p>*Materia Optativa</p><p>**Materia Anual </p>
+
+
+      <strong>Título intermedio: Técnico Universitario en Desarrollo de Software. </strong>Para su obtención se requiere la aprobación de:<br />- Todas las materias de 1° a 3° año<br />- Niveles I y II de Inglés Transversal
+
+
+<div id='downloads'><div class='mod-head'>Descargas</div><div class='mod-body'><ul><li class='pdf'><a href=descargas/565_PlandeEstudiosInformatica2023-Final.pdf target='_blank'>Mapa Ingeniería Infomática</a></li><li class='pdf'><a href=descargas/565_CorrelativasIngenieriaInformatica.pdf target='_blank'>Correlativas Ingeniería Informática</a></li></ul><ul><li class='pdf'><a href=descargas/565_EquivalenciasplanesInformaticafinal.pdf target='_blank'>Plan de transiciones</a></li><li class='pdf'><a href=descargas/565_PlanInformatica2023.pdf target='_blank'>Plan Informática 2023</a></li></ul></div></div>    </div>
+      </div>
+
+  <div class="rightColumn">
+    <div id='mainNav'> <div class='mod-head'>Men&uacute; principal</div>   <div class='mod-body'>   <ul><li><a href=/index.php?seccion=3&idArticulo=9 >Carreras de grado</a></li><li><a href=/index.php?seccion=3&idArticulo=14 >Tecnicaturas</a></li><li><a href=/index.php?seccion=3&idArticulo=15 >Curso de Ingreso</a></li>   </ul> </div> </div>    <div id="tagcloud">
+      <div class="mod-head">Etiquetas</div>
+      <div class="mod-body">
+      <a rel=11447 href='/index.php?seccion=3&idArticulo=122'>Computación Transversal Nivel I</a> <a rel=6707 href='/index.php?seccion=3&idArticulo=204'>Tecnología, Ingeniería y Sociedad</a> <a rel=7563 href='/index.php?seccion=3&idArticulo=222'>Mecánica de Materiales</a> <a rel=5524 href='/index.php?seccion=3&idArticulo=57'>Taller II</a> <a rel=3630 href='/index.php?seccion=3&idArticulo=188'>Electrónica de Potencia</a> <a rel=4584 href='/index.php?seccion=3&idArticulo=259'>Procesamiento Digital de Señales</a> <a rel=5401 href='/index.php?seccion=3&idArticulo=74'>Software de Comunicaciones</a> <a rel=3947 href='/index.php?seccion=3&idArticulo=307'>Termodinámica</a> <a rel=4203 href='/index.php?seccion=3&idArticulo=340'>Base de Datos</a> <a rel=5967 href='/index.php?seccion=3&idArticulo=275'>Análisis Estructural I</a> <a rel=4271 href='/index.php?seccion=3&idArticulo=172'>Física II A</a> <a rel=3322 href='/index.php?seccion=3&idArticulo=291'>Introducción a la Informática</a> <a rel=8134 href='/index.php?seccion=3&idArticulo=138'>Introducción a los Sistemas Digitales</a> <a rel=5557 href='/index.php?seccion=3&idArticulo=154'>Introducción a los Sistemas de Comunicaciones</a> <a rel=3445 href='/index.php?seccion=3&idArticulo=323'>Innovación, Tecnología y Creatividad</a> <a rel=11651 href='/index.php?seccion=3&idArticulo=40'>Física I</a> <a rel=5408 href='/index.php?seccion=3&idArticulo=243'>Taller de Diseño Gráfico</a> <a rel=206628 href='/index.php?seccion=3&idArticulo=9'>Carreras de grado</a> <a rel=13514 href='/index.php?seccion=3&idArticulo=90'>Análisis Matemático II</a> <a rel=8724 href='/index.php?seccion=3&idArticulo=106'>Redes de Computadoras </a>       </div>
+    </div>
+    <script type='text/javascript'>
+          $('#tagcloud a').tagcloud({
+            size: {start: 0.8, end: 1.4, unit: "em"},
+            color: {start: '#642A19', end: '#0079AE'}
+          });
+    </script>
+    <div id="contact">
+      <div class="mod-head">Contacto</div>
+      <div class="mod-body">
+        <ul>
+         <li><strong>Direcci&oacute;n:</strong> Florencio Varela 1903</li> 
+          <li><strong>Localidad:</strong> San Justo</li>
+          <li><strong>Provincia:</strong> Buenos Aires</li>
+          <li><strong>C&oacute;digo Postal:</strong> B1754JEC</li>
+          <li><strong>Tel&eacute;fono:</strong> (54 11) 4480-8900 </li>
+          <li><strong>Fax:</strong> (54 11) 4480-8900 </li>
+          <li><strong>Horario Atenci&oacute;n:</strong> 10 a 20 hs.</li>
+          <li><strong>Correo:</strong> <a href="mailto:infoingenieria@unlam.edu.ar">infoingenieria@unlam.edu.ar</a> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    </div>
+
+    <!--------------------------------------------------------------------------- FOOTER (contacto, informacion)-->
+    <div id="footer">
+        <p>Copyright &copy; 2023 v1.0.0 UNLaM - Departamento de Ingenier&iacute;a e Investigaciones Tecnol&oacute;gicas</p>
+    </div>
+
+    <!--------------------------------------------------------------------------- END (cierro el dibujo de la pagina )-->
+</div>
+
+</body>
+</html>
