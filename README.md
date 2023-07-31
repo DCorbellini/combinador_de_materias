@@ -11,7 +11,6 @@ Este projecto busca facilitar la toma de decisiones a la hora de anotarse a mate
    - Este paso solo es necesario si se quiere cambiar el plan de estudios
    - El plan de estudios debe tener materias que se cursen una vez por semana y debe seguir la misma estructura que el plan de estudios de Ingenieria Informatica
 1. Ejecutar [main.py](./main.py)
-2. 
 El programa va a generar un archivo excel como el que se mostro en la imagen con todas las combinaciones posibles (limitandose a una materia por dia)
 
 ### Opciones Extra
