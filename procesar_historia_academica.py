@@ -22,7 +22,7 @@ def main():
 
 def load_table(cur, filepath):
 
-    with open(filepath) as file:
+    with open(filepath, encoding='cp1252') as file:
         soup = BeautifulSoup(file, 'html.parser')
 
     for row in [tr.find_all('td') for tr in soup.table.tbody.find_all('tr')]:

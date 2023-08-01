@@ -58,7 +58,7 @@ def load_table(cur, filepath):
     # in case it did exist
     cur.execute(f'DELETE FROM {TABLE}')
 
-    with open(filepath) as file:
+    with open(filepath, encoding='cp1252') as file:
         soup = BeautifulSoup(file, 'html.parser')
 
     codigo_anterior = 0

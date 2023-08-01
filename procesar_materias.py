@@ -43,7 +43,7 @@ def load_table(cur, filepath):
     cur.execute(f'DELETE FROM {TABLE_CORRELATIVAS}')
     cur.execute(f'DELETE FROM {TABLE_MATERIAS}')
 
-    with open(filepath) as file:
+    with open(filepath, encoding='cp1252') as file:
         soup = BeautifulSoup(file, 'html.parser')
 
     for table in soup.find_all('tbody'):
