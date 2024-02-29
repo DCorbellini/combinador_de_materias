@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import sqlite3
+from sqlite3 import IntegrityError
 from pprint import pprint
+import warnings
 
 
 DEFAULT_DIR = './files/'
@@ -42,11 +44,13 @@ def main():
 
 
 def create_table(cur):
+    # cur.execute(f'''drop table {TABLE}''')
     cur.execute(f'''create table if not exists {TABLE} (
                     codigo int, 
                     comision int,
                     dia var(10),
                     turno var(10),
+                    modalidad var(25),
                     PRIMARY KEY (codigo, comision)
                     FOREIGN KEY(codigo) REFERENCES materias(codigo)
                 )''')
@@ -79,9 +83,20 @@ def load_table(cur, filepath):
         except ValueError:
             continue
 
-        cur.execute(f'''INSERT INTO {TABLE} (codigo, comision, dia, turno) VALUES
-            ({codigo}, {comision}, "{codigo_dia[s_comision[0]]}", "{codigo_turno[s_comision[1]]}")
-            ''')
+        modalidad = row[5].string.strip(' ()"')
+
+        try:
+            cur.execute(f'''INSERT INTO {TABLE} (codigo, comision, dia, turno, modalidad) VALUES
+                ({codigo}
+                , {comision}
+                , "{codigo_dia[s_comision[0]]}"
+                , "{codigo_turno[s_comision[1]]}"
+                , "{modalidad}")
+                ''')
+        except IntegrityError as e:
+            warnings.warn(f'La materia {codigo} tiene multiples comisiones con el codigo {comision}. '
+                          'Se tomara la primera y se ignorara el resto')
+
 
 
 if __name__ == '__main__':

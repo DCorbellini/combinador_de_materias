@@ -16,7 +16,7 @@ REQUISITOS = []
 #         'Jueves',
 #         'Viernes',
 #         'Sabado' ]
-EXTRA_QUERY = ''
+EXTRA_QUERY = ''''''
 # Ejemplo
 # EXTRA_QUERY = '''
 #         ( Turno="Noche"
@@ -140,17 +140,17 @@ def print_combinacion(cur, combinacion):
             continue
         codigo, comision = combinacion[dia]
         res = cur.execute(f'''
-            SELECT M.Nombre, O.Turno 
+            SELECT M.Nombre, O.Turno, O.Modalidad 
             FROM {TABLE_OFERTA} O
             INNER JOIN {TABLE_MATERIAS} M ON O.Codigo=M.Codigo 
             WHERE O.Codigo={codigo} AND O.Comision={comision}
         ''')
-        nombre, turno = res.fetchone()
-        table[dia][turno] = f'{nombre}\n({codigo} - {comision})'
+        nombre, turno, modalidad = res.fetchone()
+        table[dia][turno] = f'{nombre}\n({codigo} - {comision})\n{modalidad}'
 
     df = pd.DataFrame(table)
 
-    st = df.style.applymap(generate_style)
+    st = df.style.map(generate_style)
     st.to_excel(writer, WORKSHEET, startrow=startrow, startcol=1)
     startrow += 5
 
@@ -176,6 +176,7 @@ def generate_style(string):
 
 
 def get_ofertas(cur, condiciones=''):
+    condiciones = condiciones.strip()
     crear_vista_disponibles(cur)
 
     ofertas = {}
